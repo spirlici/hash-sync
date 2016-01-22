@@ -12,28 +12,35 @@
     
     var _hs = HashState.prototype;
     
-    _hs.set = function(key, val) {
+    _hs.set = function(key, val, silent) {
+        var del = val === '' || val === null || val === undefined;
+        if(del) return this.del(key);
         this.data[key] = val;
-        this.writeHash();
+        this.writeHash(silent);
         return this;
     }
     
     _hs.get = function(key) {
-        return this.data[key];
+        return key ? this.data[key] : this.data;
     }
     
-    _hs.writeHash = function(){
+    _hs.del = function(key, silent){
+        delete this.data[key];
+        this.writeHash(silent);
+        return this;
+    }
+    
+    _hs.writeHash = function(silent){
         var i
         ,   h = []
         ;
         
         for(i in this.hash) {
-            h[h.length] = i+'='+JSON.stringify(this.hash[i]);
+            h[h.length] = i+'='+encodeURIComponent(JSON.stringify(this.hash[i]));
         }
         h.sort();
         h = h.join('&');
-        
-        _hs.last_hash = '#' + h;
+        if(silent) _hs.last_hash = '#' + h;
         
         location.hash = h;
         return this;
@@ -65,12 +72,6 @@
         return this;
     }
     
-    _hs.del = function(key){
-        delete this.data[key];
-        this.writeHash();
-        return this;
-    }
-    
     
     /* hashSync jQuery plugin */
     
@@ -79,19 +80,13 @@
         var $t = this
         ,   $i  = $t.find(':input:not(.hash-sync-disabled)')
         ,   _d = {
-            hash: new HashState(opts.name)
+            hash: opts.hash || (new HashState())
           , last_hash: undefined
         }
         ;
         
         function inputChange(evt) {
             input2hash($(this));
-            // if() {
-                // v2obj(e.attr('name'), false);
-            // }
-            // else {
-                // v2obj(e.attr('name'), e.val());
-            // }
         }
         
         $i.on('change', inputChange);
@@ -101,7 +96,7 @@
             ,   v = e.val()
             ,   del
             ;
-            
+            if(!n) return false;
             if(e.is(':checkbox') && !e.prop('checked')) {
                 del = true;
             }
@@ -110,10 +105,10 @@
             }
             
             if(del) {
-                _d.hash.del(n);
+                _d.hash.del(n, true);
             }
             else {
-                _d.hash.set(n, v);
+                _d.hash.set(n, v, true);
             }
         }
         
