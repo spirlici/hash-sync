@@ -97,8 +97,11 @@
             ,   del
             ;
             if(!n) return false;
-            if(e.is(':checkbox') && !e.prop('checked')) {
-                del = true;
+            
+            if(e.is(':checkbox')) {
+                if(!e.prop('checked')) {
+                    del = true;
+                }
             }
             else if(!e.is(':radio')){
                 del = v === '' || v === null || v === undefined;
