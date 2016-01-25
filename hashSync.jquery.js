@@ -2,7 +2,7 @@
  * Sync location.hash with form elements
  *
  * @licencse MIT
- * @verions 0.0.1
+ * @version 0.0.2
  */
 
 ;(function($){
