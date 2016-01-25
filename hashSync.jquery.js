@@ -50,6 +50,7 @@
         var h = location.hash
         ,   o = get_url_vars(h, '#')
         ,   i
+        ,   k = this.key
         ;
         
         for(i in o) {
@@ -60,14 +61,14 @@
                 
             }
         }
-        this.hash = o;
-        if(this.key) {
-            if(!this.hash[this.key]) this.hash[this.key] = {};
-            this.data = this.hash[this.key];
+        if(k) {
+            if(!o[k]) o[k] = {};
+            this.data = o[k];
         }
         else {
-            this.data = this.hash;
+            this.data = o;
         }
+        this.hash = o;
         
         return this;
     }
