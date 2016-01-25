@@ -1,3 +1,9 @@
+/**
+ * Sync location.hash with form elements
+ *
+ * @licencse MIT
+ * @verions 0.0.1
+ */
 
 ;(function($){
 

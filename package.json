@@ -1,6 +1,6 @@
 {
   "name": "hash-sync",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Sync location.hash with form elements",
   "main": "hashSync.jquery.js",
   "scripts": {
@@ -20,7 +20,7 @@
   "license": "MIT",
   "verup": {
     "files": [
-      "src/hashSync.jquery.js"
+      "hashSync.jquery.js"
     ]
   },
   "devDependencies": {
