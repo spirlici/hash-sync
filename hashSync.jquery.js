@@ -9,15 +9,15 @@
 
     "use strict";
 
-    var undefined;
+    var undefined; //jshint ignore:line
 
     /* HashState class */
 
     window.HashState = function(key) {
         if(key) this.key = key;
         this.readHash();
-    }
-
+    };
+    
     var _hs = HashState.prototype;
 
     _hs.set = function(key, val, silent) {
@@ -26,18 +26,18 @@
         this.data[key] = val;
         this.writeHash(silent);
         return this;
-    }
-
+    };
+    
     _hs.get = function(key) {
         return key ? this.data[key] : this.data;
-    }
-
+    };
+    
     _hs.del = function(key, silent){
         delete this.data[key];
         this.writeHash(silent);
         return this;
-    }
-
+    };
+    
     _hs.writeHash = function(silent){
         var i
         ,   h = []
@@ -52,8 +52,8 @@
 
         location.hash = h;
         return this;
-    }
-
+    };
+    
     _hs.readHash = function() {
         var h = location.hash
         ,   o = get_url_vars(h, '#')
@@ -81,7 +81,7 @@
         this.hash = o;
 
         return this;
-    }
+    };
 
     function encode(value) {
         if ( value == undefined ) return; // null and undefined
@@ -115,8 +115,8 @@
 
         return str;
     }
-
-
+    
+    
     /* hashSync jQuery plugin */
 
     function hashSync(opts) {
